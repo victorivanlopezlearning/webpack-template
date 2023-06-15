@@ -1,5 +1,6 @@
 
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackPlugin     = require('html-webpack-plugin');
+const MiniCssExtractPlugin  = require("mini-css-extract-plugin");
 const path = require('path');
 
 module.exports = {
@@ -18,6 +19,15 @@ module.exports = {
             options: {
               sources: false, // Disables attributes processing
             },
+          },
+          {
+            test: /\.css$/i,
+            exclude: /styles.css$/,
+            use: ['style-loader', 'css-loader'],
+          },
+          {
+            test: /styles.css$/,
+            use: [MiniCssExtractPlugin.loader, 'css-loader']
           }
         ]
     },
@@ -28,6 +38,11 @@ module.exports = {
       new HtmlWebpackPlugin({
         title: 'My Webpack App',
         template: './src/index.html' // Load a custom template (lodash by default)
-      })
+      }),
+      new MiniCssExtractPlugin({
+        filename: '[name].css',
+        chunkFilename: '[id].css',
+        ignoreOrder: false, // Enable to remove warnings about conflicting order
+      }),
     ],
   };
