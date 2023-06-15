@@ -28,6 +28,10 @@ module.exports = {
           {
             test: /styles.css$/,
             use: [MiniCssExtractPlugin.loader, 'css-loader']
+          },
+          {
+            test: /\.(png|jpe?g|gif)$/,
+            type: 'asset/resource'
           }
         ]
     },
@@ -41,7 +45,6 @@ module.exports = {
       }),
       new MiniCssExtractPlugin({
         filename: '[name].css',
-        chunkFilename: '[id].css',
         ignoreOrder: false, // Enable to remove warnings about conflicting order
       }),
     ],
