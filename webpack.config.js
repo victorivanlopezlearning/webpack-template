@@ -1,6 +1,7 @@
 
 const HtmlWebpackPlugin     = require('html-webpack-plugin');
 const MiniCssExtractPlugin  = require("mini-css-extract-plugin");
+const CopyPlugin            = require("copy-webpack-plugin");
 const path = require('path');
 
 module.exports = {
@@ -9,6 +10,7 @@ module.exports = {
     output: {
         clean: true, // Clean the output directory before emit
         path: path.resolve(__dirname, 'docs'), // The output directory as an absolute path
+        assetModuleFilename: 'assets/img/[hash][ext][query]',
       },
 
     module: {
@@ -46,6 +48,11 @@ module.exports = {
       new MiniCssExtractPlugin({
         filename: '[name].css',
         ignoreOrder: false, // Enable to remove warnings about conflicting order
+      }),
+      new CopyPlugin({
+        patterns: [
+          { from: 'src/assets', to: 'assets/' },
+        ],
       }),
     ],
   };
